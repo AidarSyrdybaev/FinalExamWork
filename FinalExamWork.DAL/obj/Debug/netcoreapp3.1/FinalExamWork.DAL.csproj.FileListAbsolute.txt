@@ -1,0 +1,12 @@
+C:\Users\Neolabs\source\repos\FinalExamWork\FinalExamWork.DAL\bin\Debug\netcoreapp3.1\FinalExamWork.DAL.deps.json
+C:\Users\Neolabs\source\repos\FinalExamWork\FinalExamWork.DAL\bin\Debug\netcoreapp3.1\FinalExamWork.DAL.dll
+C:\Users\Neolabs\source\repos\FinalExamWork\FinalExamWork.DAL\obj\Debug\netcoreapp3.1\FinalExamWork.DAL.csprojAssemblyReference.cache
+C:\Users\Neolabs\source\repos\FinalExamWork\FinalExamWork.DAL\obj\Debug\netcoreapp3.1\FinalExamWork.DAL.AssemblyInfoInputs.cache
+C:\Users\Neolabs\source\repos\FinalExamWork\FinalExamWork.DAL\obj\Debug\netcoreapp3.1\FinalExamWork.DAL.AssemblyInfo.cs
+C:\Users\Neolabs\source\repos\FinalExamWork\FinalExamWork.DAL\bin\Debug\netcoreapp3.1\FinalExamWork.DAL.runtimeconfig.json
+C:\Users\Neolabs\source\repos\FinalExamWork\FinalExamWork.DAL\bin\Debug\netcoreapp3.1\FinalExamWork.DAL.runtimeconfig.dev.json
+C:\Users\Neolabs\source\repos\FinalExamWork\FinalExamWork.DAL\bin\Debug\netcoreapp3.1\FinalExamWork.DAL.pdb
+C:\Users\Neolabs\source\repos\FinalExamWork\FinalExamWork.DAL\obj\Debug\netcoreapp3.1\FinalExamWork.DAL.csproj.CoreCompileInputs.cache
+C:\Users\Neolabs\source\repos\FinalExamWork\FinalExamWork.DAL\obj\Debug\netcoreapp3.1\FinalExamWork.DAL.dll
+C:\Users\Neolabs\source\repos\FinalExamWork\FinalExamWork.DAL\obj\Debug\netcoreapp3.1\FinalExamWork.DAL.pdb
+C:\Users\Neolabs\source\repos\FinalExamWork\FinalExamWork.DAL\obj\Debug\netcoreapp3.1\FinalExamWork.DAL.genruntimeconfig.cache

@@ -8,10 +8,18 @@ using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
-using FinalExamWork.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using FinalExamWork.DAL.Context;
+using FinalExamWork.DAL.Entites;
+using FinalExamWork.DAL.Factories;
+using FinalExamWork.DAL.Factories.Contracts;
+using FinalExamWork.Service;
+using FinalExamWork.Service.File;
+using AutoMapper;
+using FinalExamWork.Service.AMapper;
+using FinalExamWork.Services;
 
 namespace FinalExamWork
 {
@@ -27,13 +35,35 @@ namespace FinalExamWork
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            var connectionString = Configuration.GetConnectionString("MainConnectionString");
+            var optionsBuilder = new DbContextOptionsBuilder();
+            optionsBuilder.UseSqlServer(connectionString);
+
+            services.AddSingleton<IApplicationDbContextFactory>(
+                sp => new ApplicationDbContextFactory(
+                    optionsBuilder.Options
+                ));
+
+            services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            
+
+
+            services.AddSingleton<IUnitOfWorkFactory, UnitOfWorkFactory>();
+
+            services.AddDbContext<ApplicationDbContext>(options =>
+            {
+                options.UseSqlServer(connectionString);
+
+            });
+            services.AddScoped<ICommentService, CommentService>();
+            services.AddScoped<IShopService, ShopService>();
+            services.AddScoped<IFileSaver, FileSaver>();
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            Mapper.Initialize(cfg => cfg.AddProfile(new MappingProfile()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,6 +88,7 @@ namespace FinalExamWork
             app.UseAuthentication();
             app.UseAuthorization();
 
+     
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

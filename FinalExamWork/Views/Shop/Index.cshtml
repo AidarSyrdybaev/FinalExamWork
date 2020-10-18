@@ -1,0 +1,33 @@
+﻿@model IndexPaginatorModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<div class="row">
+    @{
+        int Count = 0;
+        foreach (var item in Model.Models)
+        {
+            <div class="card col-3">
+                <a href="@Url.Action("Details", "Shop", new { Id = item.Id })">
+                    <img class="card-img-top" src="data:image/jpeg;base64,@(Convert.ToBase64String(item.Image))" alt="Card image cap">
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">@(item.Name)</h5>
+                    <h5 class="card-title">@(item.UserLogin)</h5>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+
+        }
+    }
+</div>
+@(Html.ActionLink("Назад", "Index", "Shop", new { Left = true, Page = Model.Page}))
+@(Html.ActionLink("Вперед", "Index", "Shop", new { Right = true, Page = Model.Page}))

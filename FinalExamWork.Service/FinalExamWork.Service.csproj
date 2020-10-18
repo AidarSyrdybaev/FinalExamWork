@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="8.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FinalExamWork.DAL\FinalExamWork.DAL.csproj" />
+    <ProjectReference Include="..\FinalExamWork\FinalExamWork.csproj" />
+  </ItemGroup>
+
+</Project>
