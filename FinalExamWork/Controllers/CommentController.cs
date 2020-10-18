@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using FinalExamWork.DAL.Entites;
 using FinalExamWork.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -22,7 +23,7 @@ namespace FinalExamWork.Controllers
             UserManager = userManager;
         }
 
-        // POST: CommentController/Create
+        [Authorize]
         [HttpPost]
         public ActionResult Create(int ShopId, string Comment, int rating)
         {
@@ -31,26 +32,13 @@ namespace FinalExamWork.Controllers
             return RedirectToAction("Details", "Shop", new{ Id = ShopId });
         }
 
-        // POST: CommentController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
         
+
+        [Authorize]
         public ActionResult Delete(int Id, int ShopId)
-        {   
-           
-            CommentService.DeleteComment(Id);
+        {
+            var UserId = UserManager.GetUserId(User);
+            CommentService.DeleteComment(Id, int.Parse(UserId));
             return RedirectToAction("Details", "Shop", new { Id = ShopId});
         }
     }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using FinalExamWork.DAL.Entites;
 using FinalExamWork.Models;
 using FinalExamWork.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -22,10 +23,10 @@ namespace FinalExamWork.Controllers
             ShopService = shopService;
         }
         // GET: ShopController
-        public ActionResult Index( bool right, bool left, int Page)
+        public ActionResult Index( bool right, bool left, int Page, string Name)
         {   
 
-            return View(ShopService.GetAll(right, left, Page));
+            return View(ShopService.GetAll(right, left, Name,Page));
         }
 
 
@@ -35,14 +36,14 @@ namespace FinalExamWork.Controllers
             return View(Model);
         }
 
-        // GET: ShopController/Create
+        [Authorize]
         public async Task<ActionResult> Create()
         {
             var Model = new ShopCreateModel();
             return View(Model);
         }
 
-        // POST: ShopController/Create
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult> Create(ShopCreateModel shopCreateModel)
         {
@@ -51,46 +52,14 @@ namespace FinalExamWork.Controllers
             return RedirectToAction("Index");
         }
 
-        // GET: ShopController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
+       
 
-        // POST: ShopController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+       [Authorize]
+        public IActionResult AddImage(int Id, IFormFileCollection Images)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: ShopController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: ShopController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var UserId = UserManager.GetUserId(User);
+            ShopService.AddImage(int.Parse(UserId), Id, Images); ;
+            return RedirectToAction("Details", new { Id = Id});
         }
     }
 }

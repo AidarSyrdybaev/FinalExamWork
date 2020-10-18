@@ -9,7 +9,8 @@ namespace FinalExamWork.Services
     {
         void CreateComment(int UserId, int ShopId, string Text, int Rate);
 
-        void DeleteComment(int Id);
-      
+        void DeleteComment(int Id, int UserId);
+
+
     }
 }

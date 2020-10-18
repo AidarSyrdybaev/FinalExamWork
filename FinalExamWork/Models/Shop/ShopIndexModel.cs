@@ -17,9 +17,9 @@ namespace FinalExamWork.Models
         [Display(Name = "Автор:")]
         public string UserLogin { get; set; }
         [Display(Name = "Отзывов:")]
-        public int CommetsCount { get; set; }
+        public int CommentsCount { get; set; }
         [Display(Name = "Рейтинг")]
-        public int Raiting { get; set; }
+        public double Raiting { get; set; }
 
         public byte[] Image { get; set; }
     }

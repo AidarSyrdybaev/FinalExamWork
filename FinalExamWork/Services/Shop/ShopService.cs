@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using Microsoft.AspNetCore.Http;
 
 namespace FinalExamWork.Service
 {
@@ -68,7 +69,7 @@ namespace FinalExamWork.Service
             }
         }
 
-        public IndexPaginatorModel GetAll(bool Right, bool Left, int Page = 1)
+        public IndexPaginatorModel GetAll(bool Right, bool Left, string Name, int Page = 1)
         {
             using (var uow = UnitOfWorkFactory.CreateUnitOfWork())
             {
@@ -91,13 +92,18 @@ namespace FinalExamWork.Service
                 {
                     Model.Page--;
                 }
-                Model.Models = GetShops(Model, Shops);
+
+                if (Name != null)
+                    Model.Models = GetShops(Model, Shops).Where(i => i.Name.Contains(Name)).ToList();
+                else
+                    Model.Models = GetShops(Model, Shops);
                 return Model;
             }
         }
 
         private List<ShopIndexModel> GetShops(IndexPaginatorModel model, List<Shop> shops)
-        {
+        {   
+
             var Shops = new List<Shop>();
             for (int i = (model.Page - 1) * model.ElementCount; i < model.Page * model.ElementCount && i <shops.Count; i++)
             {
@@ -122,7 +128,23 @@ namespace FinalExamWork.Service
                 {
                     Model.Comments.RemoveRange(Model.CommentCount - 1, Model.Comments.Count - Model.CommentCount);
                 }
+                Model.Comments = Model.Comments.OrderByDescending( i => i.DateTime).ToList();
                 return Model;
+            }
+        }
+
+        public void AddImage(int UserId, int Id, IFormFileCollection formFiles)
+        {
+            using (var uow = UnitOfWorkFactory.CreateUnitOfWork())
+            {
+                var Shop = uow.Shops.GetById(Id);
+                var Images = _FileSaver.SaveAdvertisementImages(Shop, formFiles);
+
+                foreach (var Image in Images)
+                {
+                    Image.UserId = UserId;
+                    uow.Images.Create(Image);
+                }
             }
         }
     }

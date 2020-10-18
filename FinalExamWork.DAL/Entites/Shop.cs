@@ -18,6 +18,8 @@ namespace FinalExamWork.DAL.Entites
 
         public User User { get; set; }
 
+        public int CommentsCount { get; set; }
+
         public IEnumerable<Image> Images { get; set; }
 
         public IEnumerable<Comment> Comments { get; set; }

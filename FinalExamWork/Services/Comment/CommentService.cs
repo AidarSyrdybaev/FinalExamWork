@@ -34,10 +34,12 @@ namespace FinalExamWork.Services
 
                 if (!CommentCheck)
                 {
+                    comment.DateTime = DateTime.Now;
                     uow.Comments.Create(comment);
                     var Shop = uow.Shops.GetShopAndComments(ShopId);
                     double _Rate = RatingCalculate(Shop.Comments.ToList());
                     Shop.Raiting = _Rate;
+                    Shop.CommentsCount++;
                     uow.Shops.Update(Shop);
                 }
             }
@@ -54,6 +56,7 @@ namespace FinalExamWork.Services
                 {
                     uow.Comments.Delete(Id);
                     Shop.Raiting = RatingCalculate(Shop.Comments.ToList());
+                    Shop.CommentsCount--;
                     uow.Shops.Update(Shop);
                 }
 
